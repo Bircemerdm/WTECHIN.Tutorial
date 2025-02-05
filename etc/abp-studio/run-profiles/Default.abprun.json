@@ -1,0 +1,13 @@
+﻿{
+  "applications": {
+    "WTECHIN.Tutorial.Web": {
+      "type": "dotnet-project",
+      "launchUrl": "https://localhost:44322",
+      "path": "../../../src/WTECHIN.Tutorial.Web/WTECHIN.Tutorial.Web.csproj",
+      "kubernetesService": ".*-web$",
+      "execution": {
+        "order": 2
+      }
+    }
+  }
+}
