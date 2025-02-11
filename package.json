@@ -1,0 +1,27 @@
+{
+  "name": "wtechin.tutorial",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bircemerdm/WTECHIN.Tutorial.git"
+  },
+  "author": "Bircem Erdem <bircemmerdem@gmail.com>",
+  "license": "MIT",
+  "description": "This is a layered startup solution based on [Domain Driven Design (DDD)](https://docs.abp.io/en/abp/latest/Domain-Driven-Design) practises. All the fundamental ABP modules are already installed. Check the [Application Startup Template](https://abp.io/docs/latest/startup-templates/application/index) documentation for more info.",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {
+    "eslint": "^9.20.0",
+    "globals": "^15.14.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/Bircemerdm/WTECHIN.Tutorial/issues"
+  },
+  "homepage": "https://github.com/Bircemerdm/WTECHIN.Tutorial#readme"
+}

@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.BlobStoring.Database.EntityFrameworkCore;
@@ -14,6 +14,8 @@ using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.OpenIddict.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using WTECHIN.Tutorial.Books;
+using Volo.Abp.Domain.Entities;
 
 namespace WTECHIN.Tutorial.EntityFrameworkCore;
 
@@ -26,7 +28,8 @@ public class TutorialDbContext :
     IIdentityDbContext
 {
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
-
+    public DbSet<Book> Books { get; set; } //Book sınıfını veritabanındaki bir tablo olarak tanımlar.Books, EF Core’un bu tabloya erişmesini sağlar.Eğer DbSet<Book> eklemezsen:Entity Framework Core Books tablosunu tanımaz.
+    //book entityi temsil eder books tablo ismini temsil eder
 
     #region Entities from the modules
 
@@ -78,14 +81,18 @@ public class TutorialDbContext :
         builder.ConfigureOpenIddict();
         builder.ConfigureTenantManagement();
         builder.ConfigureBlobStoring();
-        
+
         /* Configure your own tables/entities inside here */
 
-        //builder.Entity<YourEntity>(b =>
-        //{
-        //    b.ToTable(TutorialConsts.DbTablePrefix + "YourEntities", TutorialConsts.DbSchema);
-        //    b.ConfigureByConvention(); //auto configure for the base class props
-        //    //...
-        //});
+        builder.Entity<Book>(b => //EF Core'un Book sınıfının nasıl bir veritabanı tablosuna dönüştürüleceğini belirlemek için kullanılır.
+        {//Book varlığı için özel ayarlar tanımlıyoruz.b nesnesi üzerinden yapılandırmaları belirliyoruz.
+            b.ToTable(TutorialConsts.DbTablePrefix + "Books", TutorialConsts.DbSchema);//Oluşturulan tablonun ismini ve şemasını belirler.ToTable("Books") → Books adlı bir tablo oluşturur.TutorialConsts.DbTablePrefix → Eğer bu değişken "App_" gibi bir değer içeriyorsa, tablo adı "App_Books" olur.TutorialConsts.DbSchema → Şema adı belirleyerek tabloyu farklı bir şemada oluşturabiliriz.
+            b.ConfigureByConvention(); //auto configure for the base class props.Base class'tan gelen özellikleri (örn: Id, CreationTime, LastModificationTime) otomatik olarak eşler.
+            b.Property(x => x.Name).IsRequired().HasMaxLength(128);
+             //        Name sütununun zorunlu(NULL olamaz) olmasını sağlar.
+              //Maksimum 128 karakter uzunluğunda bir nvarchar(128) olarak ayarlar.
+
+
+        });
     }
 }

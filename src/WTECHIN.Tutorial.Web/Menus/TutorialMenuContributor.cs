@@ -7,6 +7,7 @@ using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Identity.Web.Navigation;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.TenantManagement.Web.Navigation;
+using Grpc.Core;
 
 namespace WTECHIN.Tutorial.Web.Menus;
 
@@ -34,6 +35,20 @@ public class TutorialMenuContributor : IMenuContributor
                 order: 1
             )
         );
+        context.Menu.AddItem( //ApplicationMenuItem sýnýfý, menü öðelerini tanýmlar.
+          //context.Menu.AddItem() metodu, menüye yeni bir öðe ekler.
+     new ApplicationMenuItem(
+         "BooksStore",                 // Menü öðesinin benzersiz adý (ID)
+         l["Menu:BookStore"],           // Menüde gösterilecek isim
+         icon: "fa fa-book"             // Menü öðesinin ikonu
+     ).AddItem(
+         new ApplicationMenuItem(
+             "BooksStore.Books",        // Alt menü öðesinin benzersiz adý (ID)
+             l["Menu:Books"],            // Alt menüde gösterilecek isim
+             url: "/Books"               // Alt menü öðesinin URL'si pages deki books klasörüne Index.cshtml kýsmýný aldý
+         )
+     )
+ );
 
 
         //Administration
