@@ -12,8 +12,7 @@ public class TutorialApplicationAutoMapperProfile : Profile
 //Manuel olarak new BookDto { Name = book.Name, Price = book.Price } yazmamýza gerek kalmaz.
 
         CreateMap<Book, BookDto>();
-        CreateMap<CreateUpdateBookDto, Book>();
-        /* You can configure your AutoMapper mapping configuration here.
+        CreateMap<CreateUpdateBookDto, Book>();        /* You can configure your AutoMapper mapping configuration here.
          * Alternatively, you can split your mapping configurations
          * into multiple profile classes for a better organization. */
 // AutoMapper, bir nesneyi baþka bir nesneye otomatik olarak eþlemeyi(map) saðlayan bir kütüphanedir.
