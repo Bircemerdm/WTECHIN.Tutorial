@@ -1,34 +1,34 @@
-using System.Threading.Tasks;//Task kullanarak asenkron (async) işlemleri yönetmek için gerekli.
-using WTECHIN.Tutorial.Books; //Kitaplarla ilgili servisler (IBookAppService) ve DTO'lar (CreateUpdateBookDto) burada tanımlı.
-using Microsoft.AspNetCore.Mvc;//BindProperty, IActionResult gibi ASP.NET Core özelliklerini kullanmak için eklenmiş.
+using System.Threading.Tasks;//Task kullanarak asenkron (async) iÅŸlemleri yÃ¶netmek iÃ§in gerekli.
+using WTECHIN.Tutorial.Books; //Kitaplarla ilgili servisler (IBookAppService) ve DTO'lar (CreateUpdateBookDto) burada tanÄ±mlÄ±.
+using Microsoft.AspNetCore.Mvc;//BindProperty, IActionResult gibi ASP.NET Core Ã¶zelliklerini kullanmak iÃ§in eklenmiÅŸ.
 
 
 namespace WTECHIN.Tutorial.Web.Pages.Books
 {
     public class CreateModalModel : TutorialPageModel
     {
-        [BindProperty]//[BindProperty] özelliği sayesinde formdan gelen verileri otomatik olarak alıyor.Kullanıcı modalda formu doldurduğunda Book nesnesine otomatik olarak bağlanıyor.
+        [BindProperty]//[BindProperty] Ã¶zelliÄŸi sayesinde formdan gelen verileri otomatik olarak alÄ±yor.KullanÄ±cÄ± modalda formu doldurduÄŸunda Book nesnesine otomatik olarak baÄŸlanÄ±yor.
 
-        public CreateUpdateBookDto Book { get; set; } //Book adlı bir DTO nesnesini tanımlıyor.
+        public CreateUpdateBookDto Book { get; set; } //Book adlÄ± bir DTO nesnesini tanÄ±mlÄ±yor.
 
         private readonly IBookAppService _bookAppService;
-        //içinde kitap oluşturma işlemini yapabilmek için bu  ınterface servise ihtiyacımız var çünkü crud işlemlerini tanımladık. 
-        //_bookAppService Kitap oluşturma, listeleme, güncelleme ve silme işlemlerini yapar.
+        //iÃ§inde kitap oluÅŸturma iÅŸlemini yapabilmek iÃ§in bu  Ä±nterface servise ihtiyacÄ±mÄ±z var Ã§Ã¼nkÃ¼ crud iÅŸlemlerini tanÄ±mladÄ±k. 
+        //_bookAppService Kitap oluÅŸturma, listeleme, gÃ¼ncelleme ve silme iÅŸlemlerini yapar.
         public CreateModalModel(IBookAppService bookAppService)
         {
             _bookAppService = bookAppService;
         }
-        //_bookAppService değişkenini başlatmak ve bağımlılığı enjekte etmek için.IBookAppService nesnesini otomatik olarak oluşturup enjekte ediyor.
-        public void OnGet() //Sayfa ilk açıldığında çalışan metottur. kullanıcı modalı açtığında çalışır
+        //_bookAppService deÄŸiÅŸkenini baÅŸlatmak ve baÄŸÄ±mlÄ±lÄ±ÄŸÄ± enjekte etmek iÃ§in.IBookAppService nesnesini otomatik olarak oluÅŸturup enjekte ediyor.
+        public void OnGet() //Sayfa ilk aÃ§Ä±ldÄ±ÄŸÄ±nda Ã§alÄ±ÅŸan metottur. kullanÄ±cÄ± modalÄ± aÃ§tÄ±ÄŸÄ±nda Ã§alÄ±ÅŸÄ±r
         {
-            Book = new CreateUpdateBookDto(); //Boş bir CreateUpdateBookDto nesnesi oluşturur.Kullanıcı modalı açınca formda boş bir kitap ekleme alanı görünür.
+            Book = new CreateUpdateBookDto(); //BoÅŸ bir CreateUpdateBookDto nesnesi oluÅŸturur.KullanÄ±cÄ± modalÄ± aÃ§Ä±nca formda boÅŸ bir kitap ekleme alanÄ± gÃ¶rÃ¼nÃ¼r.
         }
 
-        public async Task<IActionResult> OnPostAsync() //Kullanıcı formu gönderdiğinde (POST isteği) çalışır.
+        public async Task<IActionResult> OnPostAsync() //KullanÄ±cÄ± formu gÃ¶nderdiÄŸinde (POST isteÄŸi) Ã§alÄ±ÅŸÄ±r.
         {
             await _bookAppService.CreateAsync(Book);
-            //_bookAppService servisini kullanarak veriyi veritabanına ekler.
-            return NoContent(); //Başarılı olursa 204 (No Content) HTTP yanıtı döndürür.Sayfanın yenilenmesine gerek kalmaz (JavaScript modalı kapatabilir).
+            //_bookAppService servisini kullanarak veriyi veritabanÄ±na ekler.
+            return NoContent(); //BaÅŸarÄ±lÄ± olursa 204 (No Content) HTTP yanÄ±tÄ± dÃ¶ndÃ¼rÃ¼r.SayfanÄ±n yenilenmesine gerek kalmaz (JavaScript modalÄ± kapatabilir).
         }
     }
 }

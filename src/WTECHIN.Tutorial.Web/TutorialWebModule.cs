@@ -147,6 +147,14 @@ public class TutorialWebModule : AbpModule
         {
             options.IsDynamicPermissionStoreEnabled = true;
         });
+        Configure<RazorPagesOptions>(options => //bu kısmı ekledim yetkilendirme Bu kod, Razor Pages'i belirli izinlere göre yetkilendirmek için ASP.NET Core'un RazorPagesOptions yapılandırmasını kullanır.
+        {
+            options.Conventions.AuthorizePage("/Books/Index", TutorialPermissions.Books.Default);//Bu satır, /Books/Index sayfasının sadece gerekli izne sahip kullanıcılar tarafından görüntülenmesine izin verir.
+            options.Conventions.AuthorizePage("/Books/CreateModal", TutorialPermissions.Books.Create);
+            options.Conventions.AuthorizePage("/Books/EditModal", TutorialPermissions.Books.Edit);
+        }); //Bu kod bloğu, yetkisiz kullanıcıların ilgili sayfalara erişmesini engeller.
+        //AuthorizePage(string pageName, string policyName)
+        //AuthorizePage:Belirtilen sayfayı belirli bir yetki politikasına bağlar.
     }
 
 
@@ -287,4 +295,5 @@ public class TutorialWebModule : AbpModule
         app.UseAbpSerilogEnrichers();
         app.UseConfiguredEndpoints();
     }
+    
 }

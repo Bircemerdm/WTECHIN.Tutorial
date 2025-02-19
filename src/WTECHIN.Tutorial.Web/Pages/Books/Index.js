@@ -5,7 +5,9 @@
 
     var createModal = new abp.ModalManager(abp.appPath + "Books/CreateModal"); //abp.ModalManager → ABP'nin modal (açılır pencere) yönetimini sağlayan sınıfıdır.ABP projelerinde appPath, uygulamanın kök dizinini temsil eder.
 
-    var editModal = new abp.ModalManager(abp.appPath + "Books/EditModal");
+    var editModal = new abp.ModalManager({
+        viewUrl: abp.appPath + "Books/EditModal"
+    });
 
     var dataTable = $('#BooksTable').DataTable( //HTML içinde bulunan id="BooksTable" olan tabloyu seçer ve onu bir DataTable nesnesine çevirir.DataTable: Dinamik veri yükleyebilen, sıralama, sayfalama ve filtreleme özellikleri sunan gelişmiş bir tablo yapısıdır.
         abp.libs.datatables.normalizeConfiguration({
@@ -17,7 +19,7 @@
             searching: false, // Kullanıcı tablonun içeriğinde arama yapamayacak
             scrollX: true, // Yatay kaydırma açık olacak.
             ajax: abp.libs.datatables.createAjax(service.getList),//Tablonun verilerini sunucudan almasını sağlar.
-
+          
             columnDefs: [
                 {
                     title: l('Actions'),
@@ -26,15 +28,39 @@
                             [
                                 {
                                     text: l('Edit'),
+                                    visible: abp.auth.isGranted('Tutorial.Books.Edit'),
                                     action: function (data) {
-                                    //Bu, düğmeye tıklandığında çalışacak olan fonksiyondur.Parametre olarak data alıyor. data, tıklanan satırın verilerini içerir.
-                                       
-                                        editModal.open({ id: data.record.id });// record satırdaki datanın tamamını tutuyor id ile de sadece id sine erişti
+                                        alert(1);
+                                        editModal.open({ id: data.record.id });
+                                    }
+                                },
+                                {
+                                    
+                                    text: l('Delete'),
+                                    visible: abp.auth.isGranted('Tutorial.Books.Delete'),
+                                    confirmMessage: function (data) { // işlemi yürütmeden önce bir onay sorusu sormak için kullanılır 
+                                        return l(
+                                            'BookDeletionConfirmationMessage',
+                                            data.record.name
+                                        );
+                                    },
+                                  
+                                    
+                                    action: function (data) { //Bu fonksiyon, kullanıcı onayı verdikten sonra çalışacak silme işlemini tanımlar.
+                                        wTECHIN.tutorial.books.book
+                                            .delete(data.record.id)
+                                            .then(function () { //Silme işlemi başarıyla tamamlanırsa, bu blok çalışır.
+                                                abp.notify.info( //Kullanıcıya başarı mesajı gösterir.kullanıcıya bilgilendirme mesajı (info notification) göstermeye yarar.
+                                                    l('SuccessfullyDeleted')
+                                                );
+                                                dataTable.ajax.reload(); //Tabloyu yeniden yükler.
+                                            });
                                     }
                                 }
                             ]
                     }
                 },
+                 
                 {
                     title: l('Name'),
                     data: "name"
@@ -68,10 +94,9 @@
         dataTable.ajax.reload(); //DataTable'daki verileri yeniden yükler. böylece yeni yüklenen kitap görünür
     });
     editModal.onResult(function () {
-        console.log("çalış")
         dataTable.ajax.reload();
-        
     });
+
     $('#NewBookButton').click(function (e) {
         e.preventDefault();
         createModal.open(); //Modalı açar, yani kitap ekleme formunu gösterir.

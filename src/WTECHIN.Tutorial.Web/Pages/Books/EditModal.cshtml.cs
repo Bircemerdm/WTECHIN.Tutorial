@@ -5,10 +5,10 @@ using WTECHIN.Tutorial.Books;
 
 namespace WTECHIN.Tutorial.Web.Pages.Books
 {
-    public class EditModalModel : TutorialPageModel
+    public class EditModal : TutorialPageModel
     {
         [HiddenInput]
-        [BindProperty(SupportsGet = true)] //GET isteðinde (OnGetAsync) bu deðerin baðlanmasýný saðlar.
+        [BindProperty(SupportsGet = true)] //GET isteï¿½inde (OnGetAsync) bu deï¿½erin baï¿½lanmasï¿½nï¿½ saï¿½lar.
         public Guid Id { get; set; }
 
       
@@ -18,15 +18,15 @@ namespace WTECHIN.Tutorial.Web.Pages.Books
 
         private readonly IBookAppService _bookAppService;
 
-        public EditModalModel(IBookAppService bookAppService)
+        public EditModal(IBookAppService bookAppService)
         {
             _bookAppService = bookAppService;
         }
 
-        public async Task OnGetAsync() //Get isteðini çaðýran bir kod ismini deðiþtirme
+        public async Task OnGetAsync(Guid id) //Get isteï¿½ini ï¿½aï¿½ï¿½ran bir kod ismini deï¿½iï¿½tirme
         {
             var bookDto = await _bookAppService.GetAsync(Id);
-            Book = ObjectMapper.Map<BookDto, CreateUpdateBookDto>(bookDto); //<TSource, TDestination>(source).bookDto nesnesi CreateUpdateBookDto türüne dönüþtürülür (mapping iþlemi).Dönüþtürülen veri Book deðiþkenine atanýr ? HTML formunda gösterilecektir.
+            Book = ObjectMapper.Map<BookDto, CreateUpdateBookDto>(bookDto); //<TSource, TDestination>(source).bookDto nesnesi CreateUpdateBookDto tï¿½rï¿½ne dï¿½nï¿½ï¿½tï¿½rï¿½lï¿½r (mapping iï¿½lemi).Dï¿½nï¿½ï¿½tï¿½rï¿½len veri Book deï¿½iï¿½kenine atanï¿½r ? HTML formunda gï¿½sterilecektir.
             
         }
 

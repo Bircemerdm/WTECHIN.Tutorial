@@ -2,6 +2,7 @@
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using WTECHIN.Tutorial.Permissions;
 
 namespace WTECHIN.Tutorial.Books;
 public class BookAppService :
@@ -19,6 +20,12 @@ public class BookAppService :
         //IRepository<Book, Guid> repository → ABP’nin IRepository arayüzü sayesinde veritabanına erişimi sağladık.
         //base(repository) → CrudAppService sınıfına bu repository’yi ilettik, böylece CRUD işlemleri için veri erişimi sağlandı.
 
+        GetPolicyName=TutorialPermissions.Books.Default;
+        GetListPolicyName = TutorialPermissions.Books.Default;
+        CreatePolicyName = TutorialPermissions.Books.Create;
+        UpdatePolicyName = TutorialPermissions.Books.Edit;
+        DeletePolicyName = TutorialPermissions.Books.Delete;
     }
 }
+//Base CrudAppService, CRUD işlemlerinde bu izinleri otomatik olarak kullanır
 

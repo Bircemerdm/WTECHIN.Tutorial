@@ -10,9 +10,9 @@ namespace WTECHIN.Tutorial;
 public class BookStoreDataSeederContributor : IDataSeedContributor, ITransientDependency
 {
     private readonly IRepository<Book, Guid> _bookRepository;
-    public BookStoreDataSeederContributor(IRepository<Book, Guid> bookRepository) //constructor oluşturdum
+    public BookStoreDataSeederContributor(IRepository<Book, Guid> bookRepository)
     {
-        _bookRepository = bookRepository; //bu kısımda neden constructor kullandık
+        _bookRepository = bookRepository; 
     }
     public async Task SeedAsync(DataSeedContext context)
     {
@@ -26,7 +26,7 @@ public class BookStoreDataSeederContributor : IDataSeedContributor, ITransientDe
                 Price = 20.30f
 
             },
-            autoSave: true   //bu yapıyı neden kullandık?
+            autoSave: true   
         );
             await _bookRepository.InsertAsync(new Book
             {

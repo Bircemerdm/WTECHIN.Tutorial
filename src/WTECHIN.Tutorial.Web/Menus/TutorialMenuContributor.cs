@@ -35,18 +35,18 @@ public class TutorialMenuContributor : IMenuContributor
                 order: 1
             )
         );
-        context.Menu.AddItem( //ApplicationMenuItem sýnýfý, menü öðelerini tanýmlar.
-          //context.Menu.AddItem() metodu, menüye yeni bir öðe ekler.
+        context.Menu.AddItem( //ApplicationMenuItem sÄ±nÄ±fÄ±, menÃ¼ Ã¶ÄŸelerini tanÄ±mlar.
+          //context.Menu.AddItem() metodu, menÃ¼ye yeni bir Ã¶ÄŸe ekler.
      new ApplicationMenuItem(
-         "BooksStore",                 // Menü öðesinin benzersiz adý (ID)
-         l["Menu:BookStore"],           // Menüde gösterilecek isim
-         icon: "fa fa-book"             // Menü öðesinin ikonu
+         "BooksStore",                 // MenÃ¼ Ã¶ÄŸesinin benzersiz adÄ± (ID)
+         l["Menu:BookStore"],           // MenÃ¼de gÃ¶sterilecek isim
+         icon: "fa fa-book"             // MenÃ¼ Ã¶ÄŸesinin ikonu
      ).AddItem(
          new ApplicationMenuItem(
-             "BooksStore.Books",        // Alt menü öðesinin benzersiz adý (ID)
-             l["Menu:Books"],            // Alt menüde gösterilecek isim
-             url: "/Books"               // Alt menü öðesinin URL'si pages deki books klasörüne Index.cshtml kýsmýný aldý
-         )
+             "BooksStore.Books",        // Alt menÃ¼ Ã¶ÄŸesinin benzersiz adÄ± (ID)
+             l["Menu:Books"],            // Alt menÃ¼de gÃ¶sterilecek isim
+             url: "/Books"               // Alt menÃ¼ Ã¶ÄŸesinin URL'si pages deki books klasÃ¶rÃ¼ne Index.cshtml kÄ±smÄ±nÄ± aldÄ±
+         ).RequirePermissions(TutorialPermissions.Books.Default)
      )
  );
 

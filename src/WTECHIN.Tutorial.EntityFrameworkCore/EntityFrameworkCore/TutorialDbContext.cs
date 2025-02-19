@@ -16,6 +16,7 @@ using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using WTECHIN.Tutorial.Books;
 using Volo.Abp.Domain.Entities;
+using WTECHIN.Tutorial.Authors;
 
 namespace WTECHIN.Tutorial.EntityFrameworkCore;
 
@@ -53,6 +54,7 @@ public class TutorialDbContext :
     public DbSet<IdentityLinkUser> LinkUsers { get; set; }
     public DbSet<IdentityUserDelegation> UserDelegations { get; set; }
     public DbSet<IdentitySession> Sessions { get; set; }
+    public DbSet<Author> Authors { get; set; } //bu kısmı ekledim
 
     // Tenant Management
     public DbSet<Tenant> Tenants { get; set; }
@@ -88,11 +90,19 @@ public class TutorialDbContext :
         {//Book varlığı için özel ayarlar tanımlıyoruz.b nesnesi üzerinden yapılandırmaları belirliyoruz.
             b.ToTable(TutorialConsts.DbTablePrefix + "Books", TutorialConsts.DbSchema);//Oluşturulan tablonun ismini ve şemasını belirler.ToTable("Books") → Books adlı bir tablo oluşturur.TutorialConsts.DbTablePrefix → Eğer bu değişken "App_" gibi bir değer içeriyorsa, tablo adı "App_Books" olur.TutorialConsts.DbSchema → Şema adı belirleyerek tabloyu farklı bir şemada oluşturabiliriz.
             b.ConfigureByConvention(); //auto configure for the base class props.Base class'tan gelen özellikleri (örn: Id, CreationTime, LastModificationTime) otomatik olarak eşler.
-            b.Property(x => x.Name).IsRequired().HasMaxLength(128);
+            b.Property(x => x.Name).IsRequired().HasMaxLength(BookConsts.MaxNameLength);
              //        Name sütununun zorunlu(NULL olamaz) olmasını sağlar.
               //Maksimum 128 karakter uzunluğunda bir nvarchar(128) olarak ayarlar.
 
 
+        });
+        builder.Entity<Author>(b =>
+        {
+            b.ToTable(TutorialConsts.DbTablePrefix + "Authors", TutorialConsts.DbSchema);//Author sınıfını bir veritabanı tablosuyla ilişkilendirir
+            b.ConfigureByConvention();
+            b.Property(x => x.Name).IsRequired().HasMaxLength(AuthorConsts.MaxNameLength);
+            b.HasIndex(x => x.Name); //Name alanına bir indeks ekler ?? bu index ne işe yarar
+            
         });
     }
 }
