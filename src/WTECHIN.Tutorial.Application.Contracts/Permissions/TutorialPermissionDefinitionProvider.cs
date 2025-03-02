@@ -14,6 +14,12 @@ public class TutorialPermissionDefinitionProvider : PermissionDefinitionProvider
         booksPermission.AddChild(TutorialPermissions.Books.Create, L("Permission:Books.Create"));
         booksPermission.AddChild(TutorialPermissions.Books.Edit, L("Permission:Books.Edit"));
         booksPermission.AddChild(TutorialPermissions.Books.Delete, L("Permission:Books.Delete"));
+        
+        
+        var authorsPermission= bookStoreGroup.AddPermission(TutorialPermissions.Authors.Default, L("Permission:Authors"));
+        booksPermission.AddChild(TutorialPermissions.Authors.Create, L("Permission:Authors.Create"));
+        booksPermission.AddChild(TutorialPermissions.Authors.Edit, L("Permission:Authors.Edit"));
+        booksPermission.AddChild(TutorialPermissions.Authors.Delete, L("Permission:Authors.Delete"));
     }
         //Define your own permissions here. Example:
         //myGroup.AddPermission(TutorialPermissions.MyPermission1, L("Permission:MyPermission1"));

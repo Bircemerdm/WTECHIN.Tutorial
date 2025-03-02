@@ -28,7 +28,7 @@ public class AuthorManager : DomainService
             throw new AuthorAlreadyExistsException(name);  //eğer aynı isme sahip bir kişi varsa hata fırlatır
         }
 
-        return new Author(GuidGenerator.Create(), //yeni bir Author nesnesi oluşturur.GuidGenerator.Create() ⇒ Yeni bir Guid üretir.
+        return new Author(GuidGenerator.Create(), //yeni bir Author nesnesi oluşturur.GuidGenerator.Create() ⇒ Yeni bir Guid üretir ve author nesnesine atanır.
             name,
             birthDate,
             shortBio);

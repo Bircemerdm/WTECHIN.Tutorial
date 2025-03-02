@@ -1,5 +1,6 @@
 using System.Runtime.ConstrainedExecution;
 using AutoMapper;
+using WTECHIN.Tutorial.Authors;
 using WTECHIN.Tutorial.Books;
 
 namespace WTECHIN.Tutorial;
@@ -8,17 +9,20 @@ public class TutorialApplicationAutoMapperProfile : Profile
 {
     public TutorialApplicationAutoMapperProfile()
     {
-//        Bu, Book nesnesini otomatik olarak BookDto nesnesine çevirmek için bir kural oluþturur.Bu sayede:Book nesnesindeki ayný isimdeki property'ler otomatik olarak BookDto'ya taþýnýr.
-//Manuel olarak new BookDto { Name = book.Name, Price = book.Price } yazmamýza gerek kalmaz.
+//        Bu, Book nesnesini otomatik olarak BookDto nesnesine ï¿½evirmek iï¿½in bir kural oluï¿½turur.Bu sayede:Book nesnesindeki aynï¿½ isimdeki property'ler otomatik olarak BookDto'ya taï¿½ï¿½nï¿½r.
+//Manuel olarak new BookDto { Name = book.Name, Price = book.Price } yazmamï¿½za gerek kalmaz.
 
         CreateMap<Book, BookDto>();
-        CreateMap<CreateUpdateBookDto, Book>();        /* You can configure your AutoMapper mapping configuration here.
+        CreateMap<CreateUpdateBookDto, Book>(); 
+        
+        CreateMap<Author, AuthorDto>();
+        /* You can configure your AutoMapper mapping configuration here.
          * Alternatively, you can split your mapping configurations
          * into multiple profile classes for a better organization. */
-// AutoMapper, bir nesneyi baþka bir nesneye otomatik olarak eþlemeyi(map) saðlayan bir kütüphanedir.
-// Neden Kullanýyoruz?
-// Kod tekrarýný azaltýr(Her yerde new BookDto { } yazmak yerine tek bir taným yaparýz).
-// Veri dönüþümlerini merkezi hale getirir(Tüm mapping iþlemleri tek bir yerde tanýmlanýr).
-// Bakýmý kolaylaþtýrýr(Bir alan eklediðinde sadece burada deðiþtirmen yeterlidir).
+// AutoMapper, bir nesneyi baï¿½ka bir nesneye otomatik olarak eï¿½lemeyi(map) saï¿½layan bir kï¿½tï¿½phanedir.
+// Neden Kullanï¿½yoruz?
+// Kod tekrarï¿½nï¿½ azaltï¿½r(Her yerde new BookDto { } yazmak yerine tek bir tanï¿½m yaparï¿½z).
+// Veri dï¿½nï¿½ï¿½ï¿½mlerini merkezi hale getirir(Tï¿½m mapping iï¿½lemleri tek bir yerde tanï¿½mlanï¿½r).
+// Bakï¿½mï¿½ kolaylaï¿½tï¿½rï¿½r(Bir alan eklediï¿½inde sadece burada deï¿½iï¿½tirmen yeterlidir).
     }
 }

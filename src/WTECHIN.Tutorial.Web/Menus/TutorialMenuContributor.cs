@@ -47,7 +47,14 @@ public class TutorialMenuContributor : IMenuContributor
              l["Menu:Books"],            // Alt menüde gösterilecek isim
              url: "/Books"               // Alt menü öğesinin URL'si pages deki books klasörüne Index.cshtml kısmını aldı
          ).RequirePermissions(TutorialPermissions.Books.Default)
-     )
+     
+         ).AddItem( // ADDED THE NEW "AUTHORS" MENU ITEM UNDER THE "BOOK STORE" MENU
+                new ApplicationMenuItem(
+                    "BooksStore.Authors",
+                    l["Menu:Authors"],
+                    url: "/Authors"
+                ).RequirePermissions(TutorialPermissions.Authors.Default)
+                )
  );
 
 

@@ -6,13 +6,13 @@ namespace WTECHIN.Tutorial.Authors;
 
 public class Author:FullAuditedAggregateRoot<Guid>
 {
-    public string Name { get; set; }
+    public string Name { get; private set; } //başka bir sınıftan name özelliği değiştirilemez. kendi tanımlandığı sınıf içerisinden ise method tanımlayarak değiştirebiliriz
     public DateTime BirthDate { get; set; }
     public string ShortBio { get; set; }
     private Author()
     {
       // ORM'nin (EF Core gibi) nesneyi veri tabanından çekerken veya JSON'dan deserialize ederken kullanabilmesi için gereklidir.
-        /* This constructor is for deserialization / ORM purpose */
+        /* nesneleri veritabanından okurken kullanır. */
     }
     internal Author( //Bu Author sınıfının constructor'ıdır.internal erişim belirleyicisi, bu constructor'ın sadece aynı proje veya derlemeden erişilebileceğini belirtir. Parametreli Constructor
         Guid id, 
