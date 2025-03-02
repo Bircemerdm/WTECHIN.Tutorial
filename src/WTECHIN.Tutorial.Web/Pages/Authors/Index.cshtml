@@ -1,0 +1,37 @@
+﻿@page
+@using Microsoft.AspNetCore.Authorization
+@using WTECHIN.Tutorial.Permissions
+@using WTECHIN.Tutorial.Web.Pages.Authors
+@using WTECHIN.Tutorial.Localization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<TutorialResource> L
+@inject IAuthorizationService AuthorizationService
+@model IndexModel
+
+@section scripts
+{
+    <abp-script src="/Pages/Authors/Index.js"/>
+}
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["Authors"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-end">
+                @if (await AuthorizationService.IsGrantedAsync(TutorialPermissions.Authors.Create))
+                {
+                    <abp-button id="NewAuthorButton"
+                                text="@L["NewAuthor"].Value"
+                                icon="plus"
+                                button-type="Primary"/>
+                }
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="AuthorsTable"></abp-table> 
+        <!--Buradaki striped-rows="true", tablo satırlarının şeritli (çizgili) görünmesini sağlar. Yani, her iki satırdan biri farklı bir arka plan rengine sahip olur.-->
+    </abp-card-body>
+</abp-card>
