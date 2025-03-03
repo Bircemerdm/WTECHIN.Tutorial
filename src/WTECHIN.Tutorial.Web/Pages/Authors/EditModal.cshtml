@@ -6,20 +6,19 @@
 @using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form
 @using WTECHIN.Tutorial.Localization
 @inject IHtmlLocalizer<TutorialResource> L
-@model WTECHIN.Tutorial.Web.Pages.Books.EditModalModel
+@model WTECHIN.Tutorial.Web.Pages.Authors.EditModalModel
 @{
     Layout = null;
 }
 
-<form data-ajaxForm="true" asp-page="/Books/EditModal" autocomplete="off">
-    <abp-modal id="BookEditModal">
+<form data-ajaxForm="true" asp-page="/Authors/EditModal" autocomplete="off">
+    <abp-modal id="AuthorEditModal">
         <abp-modal-header title="@L["Update"].Value"></abp-modal-header>
         <abp-modal-body>
             <abp-input asp-for="Id" />
-            <abp-input asp-for="Book.Name" />
-            <abp-select asp-for="Book.Type" />
-            <abp-date-picker asp-for="Book.PublishDate" />
-            <abp-input asp-for="Book.Price" />
+            <abp-input asp-for="Author.Name" />
+            <abp-date-picker asp-for="Author.BirthDate" />
+            <abp-input asp-for="Author.ShortBio" />
         </abp-modal-body>
         <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)">
         </abp-modal-footer>

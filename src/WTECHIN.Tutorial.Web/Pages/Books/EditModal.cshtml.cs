@@ -1,39 +1,46 @@
-using System.Threading.Tasks;
 using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Volo.Abp.Application.Dtos;
 using WTECHIN.Tutorial.Books;
 
 namespace WTECHIN.Tutorial.Web.Pages.Books
 {
-    public class EditModal : TutorialPageModel
+    public class EditModalModel : TutorialPageModel
     {
         [HiddenInput]
-        [BindProperty(SupportsGet = true)] //GET iste�inde (OnGetAsync) bu de�erin ba�lanmas�n� sa�lar.
+        [BindProperty(SupportsGet = true)]
         public Guid Id { get; set; }
 
-      
-
         [BindProperty]
-        public CreateUpdateBookDto Book { get; set; }
+        public BookUpdateViewModel Book { get; set; }
 
-        private readonly IBookAppService _bookAppService;
+        protected IBookAppService _bookAppService;
 
-        public EditModal(IBookAppService bookAppService)
+        public EditModalModel(IBookAppService bookAppService)
         {
             _bookAppService = bookAppService;
+
+            Book = new();
         }
 
-        public async Task OnGetAsync(Guid id) //Get iste�ini �a��ran bir kod ismini de�i�tirme
+        public virtual async Task OnGetAsync()
         {
             var bookDto = await _bookAppService.GetAsync(Id);
-            Book = ObjectMapper.Map<BookDto, CreateUpdateBookDto>(bookDto); //<TSource, TDestination>(source).bookDto nesnesi CreateUpdateBookDto t�r�ne d�n��t�r�l�r (mapping i�lemi).D�n��t�r�len veri Book de�i�kenine atan�r ? HTML formunda g�sterilecektir.
-            
+            Book = ObjectMapper.Map<BookDto, BookUpdateViewModel>(bookDto);
         }
 
-        public async Task<IActionResult> OnPostAsync()
-        {
-            await _bookAppService.UpdateAsync(Id, Book);
+        public virtual async Task<NoContentResult> OnPostAsync()
+        {   
+            await _bookAppService.UpdateAsync(Id, ObjectMapper.Map<BookUpdateViewModel, CreateUpdateBookDto>(Book));
             return NoContent();
         }
+    }
+
+    public class BookUpdateViewModel : CreateUpdateBookDto
+    {
     }
 }

@@ -1,22 +1,25 @@
-﻿@page
+@page
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@using System.Globalization
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form
-@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
-@model WTECHIN.Tutorial.Web.Pages.Authors.CreateModal
 @using WTECHIN.Tutorial.Localization
-@using Microsoft.Extensions.Localization
-@inject IStringLocalizer<TutorialResource> L
+@inject IHtmlLocalizer<TutorialResource> L
+@model WTECHIN.Tutorial.Web.Pages.Authors.CreateModalModel
 @{
     Layout = null;
 }
-<form asp-page="/Authors/CreateModal">
-    <abp-modal>
+
+<form data-ajaxForm="true" asp-page="/Authors/CreateModal" autocomplete="off">
+    <abp-modal id="AuthorCreateModal">
         <abp-modal-header title="@L["NewAuthor"].Value"></abp-modal-header>
         <abp-modal-body>
             <abp-input asp-for="Author.Name" />
-            <abp-input asp-for="Author.BirthDate" />
+            <abp-date-picker asp-for="Author.BirthDate" />
             <abp-input asp-for="Author.ShortBio" />
         </abp-modal-body>
-        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)">
+        </abp-modal-footer>
     </abp-modal>
 </form>

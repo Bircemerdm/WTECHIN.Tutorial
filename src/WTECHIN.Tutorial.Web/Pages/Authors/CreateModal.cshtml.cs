@@ -1,48 +1,44 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+using System;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Volo.Abp.Application.Dtos;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
 using WTECHIN.Tutorial.Authors;
 
-namespace WTECHIN.Tutorial.Web.Pages.Authors;
+namespace WTECHIN.Tutorial.Web.Pages.Authors
+{
+    public class CreateModalModel : TutorialPageModel
+    {
 
-public class CreateModalModel : TutorialPageModel
-{{
         [BindProperty]
-        public CreateAuthorViewModel Author { get; set; }
+        public AuthorCreateViewModel Author { get; set; }
+        
+        protected IAuthorAppService _authorAppService;
 
-    private readonly IAuthorAppService _authorAppService;
+        public CreateModalModel(IAuthorAppService authorAppService)
+        {
+            _authorAppService = authorAppService;
 
-    public CreateModalModel(IAuthorAppService authorAppService)
-    {
-        _authorAppService = authorAppService;
+            Author = new();
+        }
+
+        public virtual async Task OnGetAsync()
+        {
+            Author = new AuthorCreateViewModel();
+
+            await Task.CompletedTask;
+        }
+
+        public virtual async Task<IActionResult> OnPostAsync()
+        {
+            await _authorAppService.CreateAsync(ObjectMapper.Map<AuthorCreateViewModel, CreateAuthorDto>(Author));
+            return NoContent();
+        }
     }
 
-    public void OnGet()
+    public class AuthorCreateViewModel : CreateAuthorDto
     {
-        Author = new CreateAuthorViewModel();
-    }
-
-    public async Task<IActionResult> OnPostAsync()
-    {
-        var dto = ObjectMapper.Map<CreateAuthorViewModel, CreateAuthorDto>(Author);
-        await _authorAppService.CreateAsync(dto);
-        return NoContent();
-    }
-
-    public class CreateAuthorViewModel
-    {
-        [Required]
-        [StringLength(AuthorConsts.MaxNameLength)]
-        public string Name { get; set; } = string.Empty;
-
-        [Required]
-        [DataType(DataType.Date)]
-        public DateTime BirthDate { get; set; }
-
-        [TextArea]
-        public string? ShortBio { get; set; }
     }
 }

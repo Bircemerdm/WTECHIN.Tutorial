@@ -24,6 +24,7 @@ public class BookStoreDataSeederContributor : IDataSeedContributor, ITransientDe
 
     public async Task SeedAsync(DataSeedContext context)
     {
+        Console.WriteLine("Seeding authors..."); 
         if (await _bookRepository.GetCountAsync() <= 0)
         {
             await _bookRepository.InsertAsync(new Book
@@ -63,7 +64,9 @@ public class BookStoreDataSeederContributor : IDataSeedContributor, ITransientDe
                     "Douglas Adams",
                     new DateTime(1952, 03, 11),
                     "Douglas Adams was an English author, screenwriter, essayist, humorist, satirist and dramatist. Adams was an advocate for environmentalism and conservation, a lover of fast cars, technological innovation and the Apple Macintosh, and a self-proclaimed 'radical atheist'."
-                )
+                ),
+                
+            autoSave: true
             );
         }
     }
